@@ -7,8 +7,11 @@ RUN apk update && apk add bash && apk add curl
 COPY download_conceptnet.sh .
 RUN sh download_conceptnet.sh
 
-COPY requirements.txt .
-RUN pip install -r requirements.txt
+#COPY requirements.txt .
+#RUN pip install -r requirements.txt
+RUN pip install --upgrade pip
+RUN pip install nltk
+RUN python -c "import nltk;downloader_=nltk.downloader.Downloader(); [downloader_.download(pkg.id) for pkg in downloader_.packages()]"
 
 COPY wordnet_conceptnet_to_neo4j.py .
 
